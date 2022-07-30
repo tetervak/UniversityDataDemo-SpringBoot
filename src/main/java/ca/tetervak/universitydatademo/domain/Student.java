@@ -16,16 +16,17 @@ public class Student {
     @GeneratedValue
     private Integer studentId;
 
+    @Embedded
+    private Person attendee;
+
     @Column
     private boolean fullTime;
 
     @Column
     private Integer age;
 
-    @Embedded
-    private Person attendee;
-
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL)
     private List<Course> courses = new ArrayList<>();
 
     public Student(Person attendee, boolean fullTime, Integer age) {
@@ -64,7 +65,7 @@ public class Student {
 
     @Override
     public String toString() {
-        return "Student{" + "studentId=" + studentId + ", " + attendee + ", fullTime=" + fullTime +
+        return "Student{" + "studentId=" + studentId + ", " + attendee +  ", fullTime=" + fullTime +
                 ", age=" + age + "}\n";
     }
 }
